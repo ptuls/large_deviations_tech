@@ -52,44 +52,6 @@ Without worst-case large deviation machineries that have been or are being devel
 conceivable option would be to enumerate all parameter settings $\bq\in Q$, but repeating tail
 bound analysis over the entire parameter space $Q$ is usually computationally prohibitive.
 
-
-%\medskip
-%\noindent
-%\textbf{Distributed data streaming problems}:  Analyzing massive aggregate traffic streams through many high-speed nodes (or links) for detecting global events
-%(\eg global elephants) that can spread themselves even and thin over these nodes (to avoid detection) or for estimating global statistics
-%in a communication-efficient manner, known as {\it distributed data streaming} (DDS),  has
-%emerged in recent years as an important research topic in network monitoring.
-%We will show that worst-case large deviation issues arise naturally in the design and analysis
-%of DDS algorithms, where we need to obtain a tight
-%probability tail bound on its detection or estimation accuracy no matter how the global event or statistic is split into
-%fragments of different sizes across these nodes.  In this project, we will start with designing such stochastically robust solutions for 
-%two important open DDS problems: estimation of the empirical entropy of and association rule mining over distributed data streams.
-%
-%\medskip
-%\noindent
-%\textbf{Large per-flow data structure problems}:
-%During a measurement period, tens of millions of application flows may pass through an Internet gateway. Many network algorithmics methods have been developed that make use of per-flow state information, \eg per-flow scheduling, stateful firewalls, and multi-packet deep packet inspection for intrusion and virus detection. However, it is very challenging to design massive flow-level data structures that are capable of providing extremely high throughput and low bounded access delay under arbitrary workloads, yet have relatively low costs. We propose to study solutions that can provide strong worst-case stochastic performance guarantees using commodity memories.
-%
-%\medskip
-%\noindent
-%\textbf{Load-balanced switching problems}:
-%Load-balanced routers are an important class of switch architectures that
-%provides scalability and throughput guarantees.  However, the plain vanilla 
-%load-balanced routers do not preserve the order of packets even within a TCP or UDP flow,
-%which could cause performance problems for many network applications~\cite{chang1,chang2}.
-%While forcing all packets within a TCP flow go down the same path (\eg determined by hashing on the flow identifier of each packet)
-%inside a router will eliminate this packet reordering issue, we will show that the significant heterogeneity in flow rates and sizes
-%seen in today's Internet will leave 
-%these routers severely load-imbalanced, defeating the very purpose for which they were designed.
-%
-%
-%We have recently discovered a novel family of load-balanced switching architectures that eliminate the packet-reordering problem,  
-%have excellent performance, and are much simpler and thus much cheaper to implement than all existing approaches to the 
-%packet reordering problem.   Through our late-breaking mathematical discoveries, described in Sec.~\ref{sec-late-breaking},
-%we show that worst-case large deviation again lies at the heart of proving that such switches are highly
-%load-balanced with overwhelming probability under all admissible workloads.  This clearly highlights the need for additional
-%inquiries into this deep and underexplored subject.
-
 Whether determining the worst case input or bounding the
 behavior of randomized algorithms, \textit{stochastic orders} can help in understanding the worst-case behavior of proposed
 solutions in network algorithmics. The motivation of this paper is to provide an overview to researchers in
