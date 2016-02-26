@@ -1,0 +1,189 @@
+\section{Introduction}
+
+Over the past two decades, the field of \emph{network algorithmics}~\cite{Varghese04Algorithmics}
+has emerged as a rich area of research. The types of problems that network
+algorithmics address include, but are not limited to, packet classification,
+queue management, traffic shaping, switching and routing, network measurement,
+and data streaming analysis. Many of such solutions have been successfully
+deployed in commercial networks, including solutions for Internet routers,
+security apparatus, and measurement devices. 
+
+In general, network operators
+would like solutions that are robust under a wide variety of, \emph{often
+unforeseen}, operating conditions. However, the performance of a network appliance
+design or the accuracy of an estimation method is often dependent on workload
+uncertainties that are beyond the control of the operator. Unfortunately,
+applicable mathematics for the rigorous analysis of the worst-case stochastic behaviors of
+network algorithmics solutions under arbitrary workloads is largely lacking.
+
+Understanding how a solution would behave in the worst-case, not just in
+the typical case, is important for two reasons. First, with suitable mathematics
+to characterize worst-case workloads, we can design solutions that will work
+well under any operating conditions, including those in which an adversary is
+trying to break the system, or under unexpected changes in the usage pattern.
+Second, more often than not, we have, surprisingly, found in our past efforts
+that delivering solutions that can guarantee high performance under the worst-case
+conditions cost only slightly more than designs that don't. However, coming up
+with such solutions hinges on our ability to understand the characteristics
+of the worst-case scenarios so that we can design around them.
+
+Large deviation theory~\cite{Dembo98LDV} on $\Real$ is concerned with the probability that
+the sum of some random variables $S := \sum_{i=1}^n X_i$ will exceed a given
+threshold $x$, which in our contexts may correspond to processing or network capacity,
+resource constraint, or tolerable error bound. In worst-case large deviation problems, 
+these random variables $X_1, X_2, \cdots, X_n$
+are the functions of some large parameter vector $\bq := \lbrack q_1, q_2, \cdots, q_m\rbrack$,
+and we wish to find the worst-case probability tail bounds of
+$S(\bq) := \sum_{i=1}^n X_i(\bq)$ under all possible parameter
+settings $\bq \in Q$. In other words, we would like to compute
+$\max_{\bq\in Q} \Pr[S(\bq) \ge x]$.
+
+Establishing such worst-case tail bounds is important not only for network
+security applications where an adversary is in full or partial control of
+this vector, but also for non-security applications where we would like to
+know the worst-case system performance under all operating conditions or workloads.
+Obtaining such worst-case bounds is very difficult because the parameter
+space $Q$ is typically gigantic. Although establishing tail bounds is
+often straightforward through Chernoff bounding
+techniques when a particular parameter setting $\bq$ is given,
+such bounds typically cannot be expressed as a closed form function of $\bq$,
+rendering conventional optimization techniques powerless for maximizing $\Pr[S(\bq) \ge x]$.
+Without worst-case large deviation machineries that have been or are being developed, the only
+conceivable option would be to enumerate all parameter settings $\bq\in Q$, but repeating tail
+bound analysis over the entire parameter space $Q$ is usually computationally prohibitive.
+
+
+%\medskip
+%\noindent
+%\textbf{Distributed data streaming problems}:  Analyzing massive aggregate traffic streams through many high-speed nodes (or links) for detecting global events
+%(\eg global elephants) that can spread themselves even and thin over these nodes (to avoid detection) or for estimating global statistics
+%in a communication-efficient manner, known as {\it distributed data streaming} (DDS),  has
+%emerged in recent years as an important research topic in network monitoring.
+%We will show that worst-case large deviation issues arise naturally in the design and analysis
+%of DDS algorithms, where we need to obtain a tight
+%probability tail bound on its detection or estimation accuracy no matter how the global event or statistic is split into
+%fragments of different sizes across these nodes.  In this project, we will start with designing such stochastically robust solutions for 
+%two important open DDS problems: estimation of the empirical entropy of and association rule mining over distributed data streams.
+%
+%\medskip
+%\noindent
+%\textbf{Large per-flow data structure problems}:
+%During a measurement period, tens of millions of application flows may pass through an Internet gateway. Many network algorithmics methods have been developed that make use of per-flow state information, \eg per-flow scheduling, stateful firewalls, and multi-packet deep packet inspection for intrusion and virus detection. However, it is very challenging to design massive flow-level data structures that are capable of providing extremely high throughput and low bounded access delay under arbitrary workloads, yet have relatively low costs. We propose to study solutions that can provide strong worst-case stochastic performance guarantees using commodity memories.
+%
+%\medskip
+%\noindent
+%\textbf{Load-balanced switching problems}:
+%Load-balanced routers are an important class of switch architectures that
+%provides scalability and throughput guarantees.  However, the plain vanilla 
+%load-balanced routers do not preserve the order of packets even within a TCP or UDP flow,
+%which could cause performance problems for many network applications~\cite{chang1,chang2}.
+%While forcing all packets within a TCP flow go down the same path (\eg determined by hashing on the flow identifier of each packet)
+%inside a router will eliminate this packet reordering issue, we will show that the significant heterogeneity in flow rates and sizes
+%seen in today's Internet will leave 
+%these routers severely load-imbalanced, defeating the very purpose for which they were designed.
+%
+%
+%We have recently discovered a novel family of load-balanced switching architectures that eliminate the packet-reordering problem,  
+%have excellent performance, and are much simpler and thus much cheaper to implement than all existing approaches to the 
+%packet reordering problem.   Through our late-breaking mathematical discoveries, described in Sec.~\ref{sec-late-breaking},
+%we show that worst-case large deviation again lies at the heart of proving that such switches are highly
+%load-balanced with overwhelming probability under all admissible workloads.  This clearly highlights the need for additional
+%inquiries into this deep and underexplored subject.
+
+Whether determining the worst case input or bounding the
+behavior of randomized algorithms, \textit{stochastic orders} can help in understanding the worst-case behavior of proposed
+solutions in network algorithmics. The motivation of this paper is to provide an overview to researchers in
+network algorithmics on stochastic orders.
+
+A stochastic order basically defines when a random variable is ``larger'' than another. The precise definition
+of ``larger'' than will depend on the order. 
+There are many types of stochastic orders that can be defined on random variables. Two chief references are
+M\"{u}ller and Stoyan \cite{Muller02Risk}, and Shaked and Shantikumar \cite{Shaked07Sorders}. Of importance
+to us are majorization and Schur convexity, supermodular and convex orderings. We will also briefly mention about negatively associated
+random variables and how they relate to network algorithmics.
+
+In this paper, we will summarize some useful classifications of distributions and stochastic orders to aid
+in the design of randomized algorithms in network algorithmics. 
+In particular, we cover:
+\begin{enumerate}
+\item majorization and Schur convexity, 
+\item negative association,
+\item convex ordering and supermodularity, and
+\item log-concave distributions.
+\end{enumerate}
+We show how these can be applied to various applications in network algorithmics. Most of the 
+results shown here can be found in literature, and so we endeavor to reference the original 
+paper where the result originated from. 
+
+
+
+
+
+%High-speed networks pose a challenge to performing
+%operations, such as measurement, on network traffic, due to three main
+%factors (also encountered in Big Data applications): volume, velocity and variety. Volume
+%and velocity are self-evident: it is common for today's backbone networks to run around 
+%100 Gbps, and this speed is likely to be surpassed in the near future. Variety appears in 
+%the different forms of traffic an operator would like to measure, for instance, traffic
+%flows of particular applications such as Voice-over-IP (VoIP), or to flag anomalies
+%in traffic.
+%
+%On a 100 Gbps link, several Terabytes of data are being transmitted per hour.
+%Clearly, the \naive solution of performing operations by first storing all traffic is prohibitively expensive, both
+%from a computational and financial standpoint. Network algorithmics, coined by 
+%Varghese \cite{Varghese04Algorithmics}, is a field that arose to address these challenges. 
+%Some problems network algorithmics has addressed include, but not limited to, packet classification
+%(such as deep packet inspection), queue management, traffic shaping, switching and routing, network
+%measurement, and data streaming analysis. The solutions from network algorithmics have been 
+%successfully deployed in commercial networks, such as new switching architectures, security apparatus, and
+%measurement devices. As network speeds increase, couple with increasing traffic demand, network
+%algorithmics will be even more prominent in the near future.
+%
+%As the inputs, \ie traffic streams, into these solutions are 
+%often arbitrary, an important issue in network algorithmics is to deal with the worst-case scenario the solutions
+%could face. Even though the solution itself has a deterministic behavior, how it behaves will be largely
+%determined by the stochastic behavior of the inputs. For instance, in switching, a scheduling policy with 
+%deterministic behavior is encouraged because deterministic behavior simplifies the design of the 
+%on-chip controller that implements the scheduling policy. The simple yet effective deterministic 
+%round-robin policy (with priority queues) of the well-known iSLIP \cite{McKeown99iSlip} 
+%scheduling policy explains its success in widespread implementation on Cisco's routers. However,
+%analysis of its worst-case behavior is determined by its interaction with specific traffic workloads.
+%
+%Moreover, many solutions in network algorithmics rely on \textit{randomness} itself. 
+%The dual requirements of dealing with high speeds constrained by a small amount of memory necessitates
+%the use of compact summaries with \textit{randomized} logic in network measurement. 
+%As the name suggests, these randomized algorithms 
+%utilizes randomness in its operations. One famous example for testing the membership of an item in a set is the Bloom filter
+%\cite{Bloom70Filter}. The Bloom filter enables the compact representation of a set for querying. 
+%Suppose a set of items are stored in the filter. If an item is in the set of items, querying for 
+%the item will always return a ``Yes''. However, if we have a query for an item \textbf{not} found in the
+%set, there is a small probability that the answer will be ``Yes''. This error is known as a false positive.  
+%In this sense, the Bloom filter trades off some storage space with a small probability of \textit{error}. 
+%
+%Essentially, this is the crux of (Monte Carlo) randomized algorithms: ensure a bounded resource (for example,
+%space), but trade this off with some error on its operations \cite{MitzenmacherProb05}. 
+%Randomized algorithms in network algorithmics require probability bounds on these errors (or ``bad'' events) occurring. 
+%
+%In both cases above, \textit{stochastic orders} can help in understanding the worst-case behavior of proposed
+%solutions in network algorithmics. The motivation of this paper is to provide an overview to researchers in
+%network algorithmics on stochastic orders.
+%
+%A stochastic order basically defines when a random variable is ``larger'' than another. The precise definition
+%of ``larger'' than will depend on the order. 
+%There are many types of stochastic orders that can be defined on random variables. Two chief references are
+%M\"{u}ller and Stoyan \cite{Muller02Risk}, and Shaked and Shantikumar \cite{Shaked07Sorders}. Of importance
+%to us are supermodular and convex orderings. We will also briefly mention about negatively associated
+%random variables and how that relates to network algorithmics.
+%
+%In this paper, we will summarize some useful classifications of distributions and stochastic orders to aid
+%in the design of randomized algorithms in network algorithmics. 
+%In particular, we cover:
+%\begin{enumerate}
+%\item majorization and Schur convexity, 
+%\item negative association,
+%\item convex ordering and supermodularity, and
+%\item log-concave distributions.
+%\end{enumerate}
+%We show how these can be applied to various applications in network algorithmics. Most of the 
+%results shown here can be found in literature, and so we endeavor to reference the original 
+%paper where the result originated from. 

@@ -1,0 +1,38 @@
+\section{Majorization and Schur Convexity}
+
+The concept of \textit{majorization}, essentially a partial order on the distribution of random variables defined
+below, has seen widespread applications in various fields. The \textit{de facto} reference for majorization is
+Marshall and Olkin's book \cite{Marshall79Majorization}. We shall briefly discuss majorization here.
+
+Let us define majorization and \textit{Schur convex functions}.
+The following definitions can be found in \cite{Marshall79Majorization}.
+\begin{defn}
+For any $n$-dimensional vectors $\bx$ and $\by$, let $x_{[1]} \ge \cdots \ge x_{[n]}$ and $y_{[1]} \ge \cdots \ge y_{[n]}$
+denote the components of $\bx$ and $\by$ in non-increasing order respectively. We say $\bx$ is majorized by $\by$,
+denoted by $\bx \lmaj \by$ if $\sum_{i=1}^k x_{[i]} \le \sum_{i=1}^k y_{[i]}$ for $k=1,2,\cdots,n-1$ and  
+$\sum_{i=1}^n x_{[i]} = \sum_{i=1}^n y_{[i]}$.
+\label{def:majorize}
+\end{defn}
+
+\begin{defn}
+A function $f : \Real^n \to \Real$ is Schur convex (Schur concave) if $\bx \lmaj \by$ implies $f(\bx) \le f(\by)$ ($f(\bx) \ge f(\by)$).
+\label{def:schur_convex}
+\end{defn}
+
+In statistics parlance, $x_{[i]}$ denotes the $i$-th \textit{order statistic} of a sample value. Majorization equivalently
+says that the order statistic of one sample set dominates another. 
+
+In \cite{Zhao10GlobalIceberg}, majorization was used in conjunction with another stochastic order to derive
+a tail bound on the overestimation error of a \textit{icebergs} or heavy-hitters, \ie objects with a large count/size,
+on distributed streams of data. We shall discuss this in more detail in \autoref{sec:supermodular}.
+
+We look at one interesting result.
+Let $X_1,X_2,\cdots, X_n$ be Bernoulli random variables with success probabilities $p_1,p_2,\cdots,p_n$ respectively
+and $\sum_{i=1}^n p_i = \mu$, where $\mu >0$ is a constant. Gleser \cite{Gleser75Schur}  proved the following:
+suppose $\lfloor \mu - 2 \rfloor \le x \le \lceil \mu+2 \rceil$, then the tail probability $\Pr(\sum_{i=1}^n X_i \ge x)$ as
+a function of $p_1,p_2, \cdots, p_n$ is Schur concave. This implies that the bound is maximized when $p_1 =
+p_2 = \cdots = p_n = \mu/n$, providing a worst case bound.
+
+The result can be extended to various cases. For instance, Merkle and Petrovi\'c extended this to the case
+of independent geometrical and negative binomial random variables \cite{Merkle97Geom}. We believe
+there is room for stronger results, in particular, if the results could be extended to log concave distributions. 

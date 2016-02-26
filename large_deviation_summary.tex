@@ -1,0 +1,317 @@
+%\documentclass[onecolumn]{IEEEtran}
+\documentclass{article}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+%\usepackage[utf8]{inputenc} 
+\usepackage{fancyhdr}
+\usepackage{epsf}
+\usepackage{subfigure}
+\usepackage{dsfont}
+\usepackage{url}
+\usepackage{times}
+\usepackage{ifthen}
+\usepackage{verbatim}
+
+\usepackage{bbm,amssymb,amsmath,amsfonts,amsthm,latexsym}
+\usepackage{graphicx,color}
+\usepackage{tikz,pgf}
+\usepackage{algorithm,algorithmic}
+\usepackage{graphics,url}
+\usepackage{subfigure}
+\usepackage{tkz-base,tkz-berge,tkz-graph,tkz-fct,tkz-euclide}
+
+%% Needed so we can draw shapes
+\usetkzobj{all}
+
+
+%\usepackage{floatrow} % for changing table fontsize
+%\DeclareFloatFont{normal}{\normaltext}
+%\floatsetup[table]{font=normal}
+
+%%%%%%%%% Colour effects
+\definecolor{subtler}{rgb}{1,0,0.1}  % subtle shading
+\def\y{\color{subtler}}              % color of changes
+\def\b{\color{blue}\small}           % talking to colleagues
+\def\pt{\color{black}}
+
+% captions and subcaptions
+% \usepackage[caption=false,position=bottom]{subfig}
+\usepackage{caption}
+\let\subcaption\relax
+\let\subfloat\relax
+%\usepackage{subcaption}
+% \usepackage[caption=false,position=bottom]{subcaption}
+% \let\subbottom\subfloat % to allow use of \subbottom instead of \subfloat
+\captionsetup[figure]{labelfont={bf},textfont={it}}
+\captionsetup[table]{labelfont={bf},textfont={it}}
+\captionsetup[subfloat]{labelfont={bf,footnotesize},textfont={it,footnotesize},subrefformat=parens}
+
+% hyperlinks, which caused some fof the grief above
+%\let\captioncaption\caption
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,pdfauthor={Paul Tune and Jun Xu},pdftitle={Stochastic Orders
+for Network Algorithmics}]
+{hyperref}
+%\let\caption\captioncaption
+%\usepackage[all]{hypcap}
+
+%%%% Formatting
+\setlength{\headheight}{10mm}
+\setlength{\headsep}{10mm}
+\setlength{\topmargin}{-1cm}
+\setlength{\textwidth}{175mm}
+\setlength{\textheight}{220mm}
+\setlength{\oddsidemargin}{-5mm}
+\lefthyphenmin=2
+\righthyphenmin=3
+
+\renewcommand{\baselinestretch}{1.0}
+\renewcommand{\textfraction}{0.1}
+
+%%%%% Page headers
+\newcommand{\titlestr}{Stochastic Orders}
+\rhead[]{{\small \titlestr}}
+\lhead[{\small }]{}
+\cfoot{}
+\rfoot[]{{\rm\thepage}}
+\lfoot[{\rm\thepage}]{}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
+
+
+%------- My common Definitions
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\ben}{\begin{equation*}}
+\newcommand{\een}{\end{equation*}}
+\newcommand{\ba}{\begin{eqnarray}}
+\newcommand{\ea}{\end{eqnarray}}
+\newcommand\Var {{\rm Var}}
+\def\Cov {\makebox{Cov }}
+\newcommand{\Z}{Z\!\!\!Z}
+\def\integer {\cal Z}
+\def\real {{\cal R}}
+\def\bl{\Bigl(\,}
+\def\br{\,\Bigr)}
+
+%%%%%%%%%%%%%%%%% definitions for this document
+\providecommand{\keywords}[1]{\begin{center}\textbf{\textit{Index terms---}} #1 \end{center}}
+\def\mus{{$\mu$s}}         % microseconds
+% THEOREMS -------------------------------------------------------
+\newtheorem{thm}{Theorem}%[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{exm}[thm]{Example}
+% MATH -----------------------------------------------------------
+\newcommand{\id}[1]{\mathbf{I}_{#1}}
+\newcommand{\mnull}[1]{\mathbf{0}_{#1}}
+\newcommand{\vnull}[2]{\mathbf{0}_{#1 \times #2}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\mset}[1]{\lbrack #1\rbrack}
+\newcommand{\Real}{\mathbb R}
+\newcommand{\Realp}{\mathbb R_{+}}
+\newcommand{\Complex}{\mathbb C}
+\newcommand{\Integer}{\mathbb Z}
+\newcommand{\Natural}{\mathbb N}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\BX}{\mathbf{B}(X)}
+\newcommand{\I}{\boldsymbol{\mathcal{I}}_{\vth}}
+\newcommand{\tr}{\mathbf{tr}}
+\newcommand{\adj}{\mathrm{adj}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\bEu}[1]{\mathbf{e}_{#1}}
+\newcommand{\bin}[2]{\text{Bin}(#1,#2)}
+\newcommand{\Count}{1}
+\newcommand{\constr}{\mathbf{G}}
+\newcommand{\ind}{\mathbbm 1}
+\newcommand{\veth}{\boldsymbol{\hat \theta}}
+\newcommand{\vbth}{\boldsymbol{\bar \theta}}
+\newcommand{\iset}[1]{\lbrack #1 \rbrack}
+\newcommand{\bxi}[1]{\mathbf{x}^{(#1)}}
+\newcommand{\bXi}[1]{\mathbf{X}^{(#1)}}
+\newcommand{\iomega}[1]{\omega^{(#1)}}
+\newcommand{\bdi}[1]{\mathbf{d}^{(#1)}}
+\newcommand{\perm}[2]{{#1}_{\lbrack #2 \rbrack}}
+\newcommand{\Exp}[1]{\text{Exp}({#1})}
+\newcommand{\DKL}[2]{D_{KL}(#1\,||\,#2) }
+\newcommand{\meet}{\mathrel{\text{\raisebox{0.25ex}{\scalebox{0.8}{$\wedge$}}}}}
+\newcommand{\join}{\mathrel{\text{\raisebox{0.25ex}{\scalebox{0.8}{$\vee$}}}}}
+% ----------------------------------------------------------------
+\renewcommand{\labelenumi}{(\roman{enumi})}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newcounter{tempcnt}
+
+
+% use "autoref" the way I want
+%   autoref is nice because the text or brackets of a ref are part of link
+%   see http://tex.stackexchange.com/questions/36575/autorefs-inserted-text-has-not-the-correct-case
+%       http://en.wikibooks.org/wiki/LaTeX/Labels_and_Cross-referencing
+%       http://www.tug.org/applications/hyperref/manual.html#TBL-23
+\def\algorithmautorefname{Algorithm}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Section}
+\def\subfigureautorefname{Figure}
+\def\theoremautorefname{Theorem}
+% from http://tex.stackexchange.com/questions/52410/how-to-use-the-command-autoref-to-implement-the-same-effect-when-use-the-comman
+\def\equationautorefname~#1\null{%
+  (#1)\null
+}
+
+\def\gap{\vspace{10pt}\noindent}
+\def\naive{na\"{\i}ve\ }
+\def\onen{\mathbf{1}_n}
+\def\range{\text{range}}
+\def\Cov{\text{Cov}}
+
+\def\vth{\boldsymbol\theta}
+\def\sech{\text{sech}}
+
+\newcommand{\etal}{{\em et al.}~}
+\newcommand{\ie}{{\em i.e.,} }
+\newcommand{\eg}{{\em e.g.,} }
+\newcommand{\etc}{{\em etc.,} }
+
+% defs for this paper
+\newcommand{\Nat}{\mathbb N}
+\def\bJ{\mathbf{J}_{\vth}}
+\def\bc{\mathbf{c}_{\vth}}
+\def\bW{\mathbf{W}}
+\def\bG{\mathbf{G}}
+\def\bA{\mathbf{A}}
+\def\bC{\mathbf{C}}
+\def\bD{\mathbf{D}}
+\def\bE{\mathbf{E}}
+\def\bH{\mathbf{H}_{\vth}}
+\def\bM{\mathbf{M}}
+\def\bN{\mathbf{N}}
+\def\bP{\mathbf{P}}
+\def\bW{\mathbf{W}}
+\def\bU{\mathbf{U}}
+\def\bQ{\mathbf{Q}}
+\def\bV{\mathbf{V}}
+\def\bF{\mathbf{F}}
+\def\bR{\mathbf{R}}
+\def\bX{\mathbf{X}}
+\def\bXs{\mathbf{\bar X}}
+\def\bY{\mathbf{Y}}
+\def\bZ{\mathbf{Z}}
+\def\bB{\mathbf{B}}
+\def\bTheta{\boldsymbol{\Theta}}
+\def\vec{\mathrm{vec}}
+\def\bee{\mathbf{e}}
+\def\ba{\mathbf{a}}
+\def\bb{\mathbf{b}}
+\def\bq{\mathbf{q}}
+\def\bv{\mathbf{v}}
+\def\bx{\mathbf{x}}
+\def\bbx{\mathbf{\bar{x}}}
+\def\by{\mathbf{y}}
+\def\bby{\mathbf{\bar{y}}}
+\def\bu{\mathbf{u}}
+\def\bz{\mathbf{z}}
+\def\bw{\mathbf{w}}
+\def\bb{\mathbf{b}}
+\def\bp{\mathbf{p}}
+\def\bd{\mathbf{d}}
+\def\cc{\mathbf{\bar c}}
+\def\bI{\mathbf{\tilde I}}
+
+\def\tbA{\boldsymbol{A}}
+\def\tbD{\boldsymbol{D}}
+\def\tbX{\boldsymbol{X}}
+\def\tbY{\boldsymbol{Y}}
+
+\def\cA{\mathcal{A}}
+\def\cC{\mathcal{C}}
+\def\cD{\mathcal{D}}
+\def\cG{\mathcal{G}}
+\def\cH{\mathcal{H}}
+\def\cL{\mathcal{L}}
+\def\cS{\mathcal{S}}
+\def\cI{\mathcal{I}}
+\def\cE{\mathcal{E}}
+\def\cM{\mathcal{M}}
+\def\cJ{\mathcal{J}}
+\def\cT{\mathcal{T}}
+\def\cX{\mathcal{X}}
+
+\def\iY{\boldsymbol{Y}}
+
+\def\Spd{\mathbb{S}^{n}_{++}}
+\def\Spsd{\mathbb{S}^{n}_{+}}
+\def\diag{\text{diag}}
+\def\rank{\text{rank}}
+
+\def\SD{\text{StdDev}}
+\def\Var{\text{Var}}
+\def\Cov{\text{Cov}}
+\def\ce{\mathbf{c}_e}
+\def\oneinf{\mathbf{1}_{\infty}}
+\def\ones{\mathbf{1}}
+\def\Fourier{\boldsymbol{\mathcal{F}}}
+
+\def\CovMtx	{\boldsymbol{\Sigma}_{\vth}}
+\def\CovMtxSeq	{\boldsymbol{\Sigma}_{\hat{\vth}^{(N)}}}
+\def\bSigma {\boldsymbol{\Sigma}}
+
+%%%%%% Orders
+\def\lecx{\le_{\text{cx}}}
+\def\leicx{\le_{\text{icx}}}
+\def\lst{\le_{\text{st}}}
+\def\lsm{\le_{\text{sm}}}
+\def\lmaj{\le_{\text{M}}}
+
+
+%----- Figure to file mappings
+%\def\homedir{.}
+%\def\figuresdir{\homedir}
+\graphicspath{{.}
+{Figures/}
+}
+
+
+\def\oneup{86mm}
+\def\twoup{80mm}
+\def\threeup{58mm}
+
+
+\begin{document}
+
+\title{Preparing for the Worst: Applications of Stochastic Orders in Network Algorithmics}
+\author{Paul Tune and Jun (Jim) Xu\thanks{The first author is with the School of Mathematical Sciences, The University of Adelaide, 
+Australia, and the second is with the College of Computing, Georgia Institute of Technology (Email: paul.tune@adelaide.edu.au,
+jun.xu@cc.gatech.edu).}}
+\date{}
+\maketitle
+
+\input{abstract}
+
+\input{introduction}
+
+\input{background}
+
+\input{majorization}
+
+\input{negative_association}
+
+\input{supermodularity}
+
+\input{log_concave}
+
+\input{conclusion}
+
+
+\section*{Acknowledgment}
+
+This work is supported in part by US NSF through grant CNS 1302197 and the Australian 
+Research Council (ARC) grant DP110103505..
+
+\bibliography{TuneBib}
+\bibliographystyle{abbrv}
+\end{document}

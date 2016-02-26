@@ -1,0 +1,236 @@
+\section{Log-Concave Distributions}
+
+Here, we briefly mention about log-concave distributions. A more complete survey 
+of the topic is found in \cite{An95LogConcave} and \cite{Saumard14LogConcave}.
+
+A continuous distribution is \textit{log-concave} if its domain is a convex set and its
+probability density function $f : \Real^n \to [0,1]$ satisfies
+\be
+f(\lambda \bx + (1-\lambda) \by) \ge 	f(\bx)^{\lambda} f(\by)^{1-\lambda}
+\label{eq:log_concave}
+\ee
+for all $\bx, \by \in \text{dom}\,f$ and $0 < \lambda < 1$. We can see this is
+equivalent to 
+\ben
+\log f(\lambda \bx + (1-\lambda) \by) \ge 	\lambda \log f(\bx) + (1-\lambda) \log f(\by)
+\een
+if $f$ is strictly positive. Examples include well-known distributions such as 
+the normal distribution, Wishart distribution, Dirichlet distribution and Beta distribution.
+
+In network algorithmics, for counting applications, we frequently deal with integer-valued (discrete)
+random variables. The definition can be extended for integer-valued random variables with modifications. In
+the discrete case, log-concave distributions are defined as probability mass functions satisfying
+\ben
+p_x^2 \ge p_{x-1} p_{x+1}
+\een
+where $p_x := \Pr(X = x)$ for all $x \in \Integer$ \cite{Keilson71DiscreteUni}. In the case of 
+\cite[Theorem 1]{Hua08BRICK,Hua08BRICKJournal}, it was
+shown that the independent samples from the Binomial distribution is log-concave. Other examples include
+\cite{An95LogConcave,Keilson71DiscreteUni}:
+\begin{enumerate}
+\item Bernoulli trial,
+\item the binomial distribution,
+\item the Poisson distribution,
+\item the geometric distribution, and
+\item the negative binomial distribution.
+\end{enumerate}
+These canonical distributions are often encountered in counting sketch applications.
+
+Let $\Omega$ denote the support of the probability density function of a continuous random variable
+$X$.
+\begin{defn}
+A probability density $f(x)$ is \textit{unimodal} if there exists a mode $m \in \Omega$ such that $f(x) \le f(y)$ for all
+$x \le y \le m$ or for all $m \le y \le x$. $f(x)$ is \textit{strongly unimodal} if the convolution of $f$ with any
+unimodal $g$ is unimodal.
+\label{defn:unimodal}
+\end{defn}
+A surprising result by Ibragimov \cite{Ibragimov65LogUnimodal} is the following:
+\begin{thm}
+A random variable $X$ is distributed according to a log-concave distribution if and only if its
+density function $f(x)$ is strongly unimodal.
+\label{thm:log_concave_unimodal}
+\end{thm}
+\noindent
+This is useful, because one can check if a distribution is strongly unimodal more readily than using the
+direct definition of a log-concave distribution.
+
+Though Ibragimov's result applies to continuous random variables, by applying the definition of
+log-concavity for discrete random variables, the results can be extended to log-concave distributions
+in the discrete case \cite[Theorem 3]{Keilson71DiscreteUni}.
+
+Log-concave distributions have several desirable properties for applications to randomized algorithms:
+\begin{enumerate}
+\item the tail of a log-concave distribution is \textit{subexponential}, \ie it decays faster than the tail of an
+exponential distribution,
+\item the convolution of log-concave distributions is log-concave \ie the family is closed under convolution.
+\end{enumerate}
+The first property is clearly useful in bounding the worst-case probability of ``bad'' events. 
+
+The second is useful in proving more complex distributions are log-concave. For instance, the sum of unlike Bernoulli
+trials, \ie the distribution of Bernoulli trials, each with parameter $p_i$, $i = 1,2,\cdots,n$, has a 
+distribution that is the convolution of the distribution of the trials. Since a Bernoulli trial has a log-concave
+distribution, then the sum of unlike Bernoulli trials also has a log-concave distribution. The sum of 
+random variables is often encountered in many problems in network algorithmics.
+
+\subsection{Efron's monotonicity theorem}
+
+The importance of log-concave distributions is chiefly due to \textit{Efron's monotonicity theorem}
+\cite{Efron65Polya}. The theorem states the following:
+\begin{thm}
+Suppose that $f: \Real^n \to \Real$ where $f$ is coordinate-wise non-decreasing and let 
+\be
+g(z) := \E \left[ f(X_1,X_2,\cdots,X_n)\,\Big|\, \sum_{i=1}^n X_i = z\right],
+\label{eq:conditional}
+\ee
+where $X_1,X_2,\cdots,X_n$ are independent and log-concave. Then $g$ is non-decreasing.
+\label{thm:efron}
+\end{thm}
+Note that this result also holds for integer-valued (discrete) random variables with 
+a log-concave distribution.
+
+An interesting consequence of Theorem \ref{thm:efron} is that the joint conditional distribution of
+$X_1,X_2,\cdots,X_n$ given $\sum_{i=1}^n X_i$ is \textit{negatively associated} 
+(almost surely)~\cite[Theorem 2.8]{JoagDev83NA}. For instance, this means samples with replacement from a finite population, conditioned
+on a total sampling budget are negatively associated. From the previous section, negative association implies some
+useful properties that can be used to bound worse case events, for example, as in Theorem \ref{thm:na_exchangeable}.
+
+Moreover, by the definition of the usual stochastic order, Efron's theorem implies
+\be
+\left(X_1,X_2,\cdots,X_n\,\Big|\,\sum_{i=1}^n X_i = s\right) \lst \left(X_1,X_2,\cdots,X_n\,\Big|\,\sum_{i=1}^n X_i = t\right) 
+\label{eq:conditional_dominance}
+\ee
+for $t > s$ if $X_1,X_2,\cdots,X_n$ are independent samples from log-concave distributions.
+
+One regularly encountered bound is a bound we term the \textit{times-2 bound}: 
+for any coordinate-wise non-decreasing function $f$, and
+two sets of random variables $X_1,X_2,\cdots,X_n$ and $Y_1,Y_2,\cdots,Y_n$,
+\be
+\E[f(X_1,X_2,\cdots,X_n)] \le 2\E[f(Y_1,Y_2,\cdots,Y_n)],
+\label{eq:times_two}
+\ee
+where $Y_i$ has the same marginal distribution as $X_i$ for all $i$, yet $Y_i$s are independent.
+
+For the balls-into-bins model with $m$ identical balls and $n$ bins, 
+this was proven rigorously by Mitzenmacher and Upfal 
+\cite{MitzenmacherProb05}: the $X_i$s denote the number of balls in a bin after all the
+balls have been thrown (which are clearly dependent), while the $Y_i$s denote the 
+independent Poisson random variables with rate $m/n$.
+
+We present a generalized version of the bound that applies to log-concave distributions.
+\begin{thm}[Times-2 Bound]
+Let $Y_1,Y_2,\cdots,Y_n$ be a set of independent log-concavely distributed random 
+variables, and let the support set of the distribution of the random variable $\sum_{i=1}^n Y_i$ be 
+$\Omega$. Suppose
+\begin{enumerate}
+\item there exists a proper subset $\Omega' \subset \Omega$, which is a restricted
+version of $\Omega$, starting from $\tau$ to the end of the maximum support (can be $\infty$), and
+\item $\tau$ is less than the median of $\sum_{i=1}^n Y_i$.
+\end{enumerate}
+Let $X_1,X_2,\cdots,X_n$ be a set of dependent random variables such that
+\ben
+\mu(X_1,X_2,\cdots,X_n) = \mu\left(Y_1,Y_2,\cdots,Y_n\,\Big|\, \sum_{i=1}^n Y_i = \tau \right),
+\een
+where $\mu(Z)$ is the distribution of a random variable or vector $Z$.
+Then, for any coordinate-wise non-decreasing function $f(x_1,x_2,\cdots,x_n)$,
+\be
+\E[f(X_1,X_2,\cdots,X_n)] \le 2 \E[f(Y_1,Y_2,\cdots,Y_n)] .
+\label{eq:twice_bound}
+\ee
+\label{thm:two_times_lconcave}
+\end{thm}
+\begin{proof}
+Here we derive the result for the case when both $X_i$ and $Y_i$ are discrete for all $i$.
+The proof applies similarly when both $X_i$ and $Y_i$ are continuous with some modifications.
+The proof follows an outline from the proof of \cite[Theorem 1]{Hua08BRICK} and
+\cite[p.~121]{MitzenmacherProb05}. For 
+any coordinate-wise non-decreasing function $f(x_1,x_2,\cdots,x_n)$, 
+\begin{align}
+\nonumber
+ \E[f(Y_1,Y_2,\cdots,Y_n)] &= \sum_{\ell \in \Omega} \E\left[ f(Y_1,Y_2,\cdots,Y_n) \,\Big|\, \sum_{i=1}^n Y_i = \ell \right] \Pr\left( \sum_{i=1}^n
+ Y_i = \ell \right)\\
+ \nonumber
+ &\ge \sum_{\ell \in \Omega'} \E\left[ f(Y_1,Y_2,\cdots,Y_n) \,\Big|\, \sum_{i=1}^n Y_i = \ell \right] \Pr\left( \sum_{i=1}^n
+ Y_i = \ell \right)\\
+ \label{eq:efron_lower}
+ &\ge \sum_{\ell \in \Omega'} \E\left[ f(Y_1,Y_2,\cdots,Y_n) \,\Big|\, \sum_{i=1}^n Y_i = \tau \right] \Pr\left( \sum_{i=1}^n
+ Y_i = \ell \right)\\
+ \nonumber
+ &= \E\left[ f(Y_1,Y_2,\cdots,Y_n) \,\Big|\, \sum_{i=1}^n Y_i = \tau \right] \sum_{\ell \in \Omega'} \Pr\left( \sum_{i=1}^n
+ Y_i = \ell \right)\\
+ \nonumber
+ &= \E\left[ f(X_1,X_2,\cdots,X_n) \right] \Pr\left( \sum_{i=1}^n Y_i \ge \tau \right)\\
+ \label{eq:50th_pc}
+ &\ge \frac{1}{2} \E\left[ f(X_1,X_2,\cdots,X_n) \right].
+\end{align}
+Inequality \autoref{eq:efron_lower} follows from the implication of Efron's theorem, that is \autoref{eq:conditional_dominance}
+and Condition (i). Inequality \autoref{eq:50th_pc} follows since Condition (ii) implies
+\ben
+\Pr\left( \sum_{i=1}^n Y_i \ge \tau \right) \ge \frac{1}{2}.
+\een
+\end{proof}
+
+\begin{rem}
+Now if $X_1,X_2,\cdots,X_n$ has a joint distribution such that
+\ben
+\mu(X_1,X_2,\cdots,X_n) = \mu\left(Y_1,Y_2,\cdots,Y_n\,\Big|\, \sum_{i=1}^n Y_i = \tau \right)
+\een
+and since $Y_1,Y_2,\cdots,Y_n$ given $\sum_{i=1}^n Y_i = \tau$ are negatively associated 
+(almost surely), by implication, $X_1,X_2,\cdots,X_n$ are negatively associated (almost surely).
+The proof, which we omit here, is via contradiction.
+\label{rem:na}
+\end{rem}
+
+We can say a little more about the result. In Condition (ii), it is stated that $\tau$ is less than the
+median of $\sum_{i=1}^n Y_i$. Often, what one would like to do is to set $\tau$ to be the mean
+of $\sum_{i=1}^n Y_i$. We know that log-concave distributions are strongly unimodal,
+so the distribution of $\sum_{i=1}^n Y_i$ is strongly unimodal. For 
+the condition to be satisfied, we require that the mean must be less than or equal to the median.
+
+The result has interesting implications: we can use a log-concavely distributed random variables 
+to bound a set of (negatively) dependent random variables. In the balls-and-bins model, the chosen distribution for the 
+$Y_i$s are the Poisson \cite{MitzenmacherProb05} and Binomial \cite{Hua08BRICK} random variables. Our result
+shows that a wider class of distributions can be applied, so as long as the conditions of Theorem 
+\ref{thm:two_times_lconcave} are satisfied.
+
+With this result, we can now derive simple bounds. One trick is to observe that the indicator 
+function is a coordinate-wise non-decreasing function, so we can set 
+\ben
+f(x_1,x_2,\cdots,x_n) = \mathbb{I}\Big\{ g(x_1,x_2,\cdots,x_n) > c \Big\},
+\een
+for some constant $c$ and some function $g$. Then, assuming the conditions of Theorem 
+\ref{thm:two_times_lconcave} are satisfied, this gives us
+\begin{align*}
+%\E \mathbb{I}\Big\{ \mathbb{I}\{ g(X_1,X_2,\cdots,X_n) > c \} \Big\} &\le 2\E \mathbb{I}\Big\{ \mathbb{I}\{ g(Y_1,Y_2,\cdots,Y_n) > c \} \Big\}\\
+\Pr\Big( g(X_1,X_2,\cdots,X_n) > c \Big) &\le 2\Pr\Big(  g(Y_1,Y_2,\cdots,Y_n) > c \Big).
+\end{align*}
+Since a tail bound is more readily derived for the $Y_i$s since they are independent, we know that the bound on 
+$g(X_1,X_2,\cdots,X_n)$ is at most twice the tail bound probability on the $Y_i$s. 
+
+As an example, in the balls-and-bins model, we can set
+\ben
+g(x_1,x_2,\cdots,x_n) = \max_{1 \le i \le n} x_i,
+\een
+that is, the maximum load over all bins. We then choose $Y_i$s from the Poisson distribution with rate
+$\alpha = m/n$. Work by Kimber \cite{Kimber83PoissonMax} showed that 
+\be
+\Pr\left( \max_{1 \le i \le n} Y_i > \frac{\log n}{\log \log n} + 1\right) \to 0,
+\ee
+for fixed $\alpha$ as $n \to \infty$, so with high probability, the maximum load of a bin 
+is $O(\log n/ \log \log n)$, confirming the results in literature. 
+
+%For log-concave distributions, we can prove a stochastic ordering. We state the following result
+%without proof, which can be found in \cite[Theorem 1.A.1]{Shaked07Sorders}:
+
+%\begin{lem}
+%Let $X$ and $Y$ be two random variables (or vectors). Then, $X \le_{st} Y$ if and only if there
+%exists $X'$ and $Y'$ such that their measures $\mu(X') = \mu(X)$, $\mu(Y') = \mu(Y)$, and
+%$\Pr(X' \le Y') = 1.
+%\label{lem:st_order_equiv}
+%\end{lem}
+
+
+As an aside, there is no known result on the necessary condition for \autoref{eq:conditional} to be coordinate-wise
+non-decreasing with respect to $z$. However, by following the proof of Efron's theorem, 
+it is clear that the properties of the distribution must be preserved under convolution, since adding $X_{n+1}$ to 
+a sequence $X_1,X_2,\cdots,X_n$ should preserve the joint distribution in order for the condition to hold.
+For instance, log-concave distributions satisfy this condition because they are closed under convolution. 

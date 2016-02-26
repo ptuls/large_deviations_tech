@@ -1,0 +1,316 @@
+% My publications
+%
+%       Updated:   February 17, 2014
+%
+%       Paul Tune
+%
+
+%%% Months
+@string{JAN = "January"}
+@string{FEB = "February"}
+@string{MAR = "March"}
+@string{APR = "April"}
+@string{MAY = "May"}
+@string{JUN = "June"}
+@string{JUL = "July"}
+@string{AUG = "August"}
+@string{SEP = "September"}
+@string{OCT = "October"}
+@string{NOV = "November"}
+@string{DEC = "December"}
+
+%%% Journals
+@string{PIEEE = "Proceedings of the IEEE"}
+@string{IEEEJSAC = "IEEE J. Selected Areas in Communications"}
+@string{IEEETON = "IEEE/ACM Trans. Networking"}
+@string{IEEETCOM = "IEEE Trans. Communications"}
+@string{IEEETOIT = "IEEE Trans. Info. Theory"}
+@string{IEEETSP = "IEEE Trans. Sig. Proc."}
+@string{INTERNETWORK = "Journal of Internetworking: Research and Experience"}
+@string{IJDACS = "International Journal on Digital and Analog Communication Systems"}
+@string{IJCS = "International Journal on Communication Systems"}
+@string{ACMTCS = "ACM Trans. Computer Systems"}
+@string{JACM = "J. of the ACM"}
+@string{MTA = "Multimedia Tools and Applications"}
+@string{CC = "Computer Communications"}
+@string{IPJ = "Internet Protocol Journal"}
+
+%%% Magazines
+@string{CACM = "Communications of the ACM"}
+@string{COMPUTER = "IEEE Computer Magazine"}
+@string{IEEECOM = "IEEE Communication Magazine"}
+@string{IEEENET = "IEEE Network Magazine"}
+@string{CCR = "ACM SIGCOMM Computer Communication Review"}
+
+%%% Conferences
+@string{IMW = "Proc. ACM SIGCOMM Internet Measurement Workshop, IMW"}
+@string{IMC = "Proc. ACM SIGCOMM Internet Measurement Conference, IMC"}
+@string{INFOCOM = "Proc. IEEE Infocom"}
+@string{GLOBECOM = "Proc. IEEE GLOBECOM"}
+@string{GINET = "Proc. IEEE Global Internet Symposium"}
+@string{INET = "Proc. INET"}
+@string{IPOM = "Proc. IEEE Intl. Workshop on IP Operations and Management, IPOM"}
+@string{SIGCOMM = "Proc. ACM SIGCOMM"}
+@string{SIGMETRICS = "Proc. ACM SIGMETRICS"}
+@string{HSNMC="Proc. High Speed Networking and Multimedia Computing Symp."}
+@string{ICNP = "Proc. International Conference on Network Protocols"}
+@string{ICC = "Proc. International Conference on Communications"}
+@string{FTCS = "Proc. International Symposium on Fault-Tolerant Computing"}
+@string{ITCOM = "Proc. Workshop on Scalability and Traffic Control in IP Networks, SPIE ITCOM Conference"}
+@string{USITS = "Proc. USENIX Symposium on Internet Technologies and Systems"}
+@string{ICDCS = "Proc. International Conference on Distributed Computing Systems"}
+@string{NSDI = "Proc. USENIX Symposium on Networked Systems Design and Implementation"}
+@string{FDNA = "ACM SIGCOMM Workshop on Future Directions in Network Architecture"}
+@string{PAM = "Proc. of Passive and Active Measurement Workshop, PAM"}
+@string{HotNets = "Proc. SIGCOMM Workshop on Hot Topics in Networking, HotNets"}
+@string{E2EMON = "Proc. IEEE Workshop on End-to-End Monitoring, E2EMON"}
+
+%%% Publishers
+@string{AW="Addison-Wesley"}
+@string{CP="Cisco Press"}
+@string{PH="Prentice Hall"}
+@string{OR="O'Reilly"}
+@string{JW="John Wiley and Sons"}
+@string{CUP="Cambridge University Press"}
+
+%%% Standards
+@string{IETF = "IETF"}
+@string{RFC = "RFC"}
+
+
+
+@inproceedings{Tune08DSimc,
+	author = {Paul Tune and Darryl Veitch},
+	title = {Towards Optimal Sampling for Flow Size Estimation},
+	booktitle = {Proceedings of the 8th ACM SIGCOMM on Internet Measurement},
+	month = {October},
+	year = {2008},
+	address = {Vouliagmeni, Greece},
+	pages = {243--255},
+	abstract = {The flow size distribution is a useful metric for traffic modeling and
+				management. It is well known however that its estimation based on
+				sampled data is problematic. Previous work has shown that flow sampling
+				(FS) offers enormous statistical benefits over packet sampling, however
+				it suffers from high resource requirements and is not currently used in
+				routers. In this paper we present Dual Sampling, which can to a large
+				extent provide flow-sampling-like statistical performance for			
+				packet-sampling-like computational cost. Our work is grounded in a
+				Fisher information based approach recently used to evaluate a number of
+				sampling schemes, excluding however FS, for TCP flows. We show how to
+				revise and extend the approach to include FS as well as DS and others,
+				and how to make rigorous and fair comparisons. We show how DS
+				significantly outperforms other packet based methods, but also prove
+			 	that DS is inferior to flow sampling. However, since DS is a
+				two-parameter family of methods which includes FS as a special case, DS
+				can be used to approach flow sampling continuously. We then describe a
+				packet sampling based implementation of DS and analyze its key
+				computational costs to show that router implementation is feasible. Our
+				approach offers insights into many issues, including how the notions of
+				`flow quality' and `packet gain' can be used to understand the relative
+				performance of methods, and how the problem of optimal sampling can be
+				formulated. Our work is theoretical with some simulation support and a
+ 			    case study on Internet data.},
+	link = {http://www.cubinlab.ee.unimelb.edu.au/\~lsptune/documents/imcfp19-tune.pdf}
+}	
+
+
+@techreport{TuneEM08,
+	author = {Paul Tune and Darryl Veitch},
+	title = {On the Estimation of Flow Sizes from Sampled Traffic},
+	number = {TR08-002},
+	institution = {University of Melbourne},
+	note = {Available at http://www.cubinlab.ee.unimelb.edu.au/$\sim$lsptune/},
+	year = {2008},
+	abstract = {The Expectation-Maximization (EM) algorithm is a popular algorithm used
+			    in various applications, when a closed form of the maximum likelihood
+				estimator (MLE) cannot be found. In this short report, we study the use
+				of the EM algorithm when applied to estimating flow sizes. We also
+				derive the MLE for flow sampling.},
+	link = {http://www.cubinlab.ee.unimelb.edu.au/~lsptune/documents/flow_em.pdf}
+}
+
+@inproceedings{Tune09DownCS,
+	author = {Sibi Raj Bhaskaran and Linda Davies and Alex Grant and Stephen Hanly and
+			  Paul Tune},
+	title = {Downlink Scheduling using Compressed Sensing},
+	booktitle = {IEEE Information Theory Workshop (ITW '09)},
+	month = {June},
+	year = {2009},
+	address = {Volos, Greece},
+	pages = {243--255},
+	abstract = {We propose a novel access technique for cellular downlink resource
+				sharing. In particular, a distributed self-selection procedure is
+				combined with the technique of compressed sensing to identify a set of
+				users who are getting simultaneous access to the downlink boradcast
+				channel. The performance of the proposed method is analyzed and its
+				suitability as an alternate access mechanism is argued.}
+}	
+
+@inproceedings{Tune09CSbounds,
+	author = {Paul Tune and Sibi Raj Bhaskaran and Stephen Hanly},
+	title = {Number of Measurements in Sparse Signal Recovery},
+	booktitle = {IEEE International Symposium on Information Theory (ISIT '09)},
+	month = {June},
+	year = {2009},
+	address = {Seoul, South Korea},
+	pages = {16--20},
+	abstract = {We analyze the asymptotic performance of sparse signal recovery from
+				noisy measurements. In particular, we generalize some of the existing
+				results for the Gaussian case to subgaussian and other ensembles. An
+				achievable result is demonstrated using typical decoding. A converse on
+				the number of required measurements is also presented, which covers many
+				of the widely used measurement ensembles. Our converse idea makes use of
+				a correspondence between compressed sensing ideas and compound channels
+				in information theory.}
+}	
+
+@inproceedings{Davis10CSmimo,
+	author = {Linda Davis and Stephen Hanly and Paul Tune and Sibi Raj Bhaskaran},
+	title = {Multi-antenna Downlink Broadcast using Compressed-Sensed Medium Access},
+	booktitle = {IEEE International Conference on Communications (ICC) 2010},
+	month = {May},
+	year = {2010}
+}
+
+@techreport{Tune10Skampling,
+	author = {Paul Tune and Darryl Veitch},
+	title = {On Sampling, Sketching and Skampling},
+	institution = {University of Melbourne},
+	note = {Available upon request},
+	year = {2010},
+	abstract = {Router level measurements are increasing in importance, and sophistication, as 
+			rising security concerns join traffic management needs. However, due to the high speed
+			nature of core routers, tracking traffic characteristics beyond the IP header level is very
+			challenging. Two approaches to this problem are traffic sampling and sketching. In this
+			paper we focus on the flow size distribution, which is important both for security and
+			traffic engineering. We first show that flow sampling, which has been shown to be inherently
+			superior to many other forms of sampling, is implementable with current router technology.
+			We then perform, for the first time, an information theoretic comparison between flow
+			sampling and sketching,  which reveals their comparative underlying efficiency in
+			capturing information relevant to flow size, and through their associated Cram\'{e}r--Rao
+			lower bounds on variance, gives the fundamental limits of flow size estimates. The
+			performance comparison is first made in an absolute information-theoretic sense, and then
+			in the presence of resource constraints according to simple models of router
+			implementations. We show how we can significantly improve the estimation quality of the
+			sketch with minor modifications. Finally, we study a joint sketching-sampling system. We
+			show how insights developed in this paper are valuable in the design and optimization of
+			such systems.}
+}
+
+@inproceedings{FSvsSk_Infocom2011,
+   author =    {Paul Tune and Darryl Veitch},
+   title =     {{Sampling vs Sketching: An Information Theoretic Comparison}},
+   booktitle =   {IEEE Infocom 2011},
+   month =     {April 10-15},
+   address =   {Shanghai, China},
+   year =      {2011},
+   pages = {2105-2113},
+   abstract = {The main approaches to high speed measurement in routers are traffic sampling, and 
+   sketching. However, it is not known which paradigm is inherently better at extracting 
+   information from traffic streams. We tackle this problem for the first time using Fisher 
+   information as a means of comparison, in the context of flow size distribution measurement. We 
+   first provide a side-by-side information theoretic comparison, and then with added resource 
+   constraints according to simple models of router implementations. Finally, we evaluate the 
+   performance of both methods on actual traffic traces.}
+}
+
+@article{Tune11DSjournal,
+	author = {Paul Tune and Darryl Veitch},
+	title = {Fisher Information in Flow Size Distribution Estimation},
+	journal = IEEETOIT,
+	volume = {57},
+	number = {10},
+	pages = {7011--7035},
+	month = OCT,
+	year = {2011},
+	abstract = {The flow size distribution is a useful metric for traffic modeling and management. 
+	Its estimation based on sampled data, however, is problematic. Previous work has 	
+	shown that flow sampling (FS) offers enormous statistical benefits over packet 
+	sampling but high resource requirements precludes its use in routers. We present 
+	dual sampling (DS), a two-parameter family, which, to a large extent, provide 
+	FS-like statistical performance by approaching FS continuously, with just 
+	packet-sampling-like computational cost. Our work utilizes a Fisher information 
+	based approach recently used to evaluate a number of sampling schemes, excluding 
+	FS, for TCP flows. We revise and extend the approach to make rigorous and fair 
+	comparisons between FS, DS, and others. We show how DS significantly outperforms 
+	other packet based methods, including Sample and Hold, the closest packet 
+	sampling-based competitor to FS. We describe a packet sampling-based implementation 
+	of DS and analyze its key computational costs to show that router implementation is 
+	feasible. Our approach offers insights into numerous issues, including the notion 
+	of ``flow quality'' for understanding the relative performance of methods, and how
+	and when employing sequence numbers is beneficial. Our work is theoretical with
+	some simulation support and case studies on Internet data.}
+}
+
+
+@article{Tune12CRB,
+	author = {Paul Tune},
+	title = {Computing Constrained {C}ram\'er-{R}ao Bounds},
+	journal = IEEETSP,
+	volume = 60,
+	number = 10,
+	month = OCT,
+	year = 2012,
+	pages = {5543--5548}
+}
+
+@inproceedings{Tune13HMM,
+	author = {Paul Tune and Hung X.~Nguyen and Matthew Roughan},
+	title = {Hidden {M}arkov Model Identifiability via Tensors},
+	booktitle = {ISIT 2013},
+	month = JUL,
+	year = {2013},
+	location = {Istanbul, Turkey},
+	pages = {2299--2303}
+}
+
+@incollection{Tune13Primer,
+	author = {Paul Tune and Matthew Roughan},
+	title = {Internet traffic matrices: {A} Primer},
+	editor = {Hamed Haddadi and Oliver Bonaventure},
+	booktitle = {Recent Advances in Networking, Vol.~1},
+	publisher = {ACM SIGCOMM},
+	month = AUG,
+	year = {2013}
+}
+
+@inproceedings{Tune14NetDesign,
+	author = {Paul Tune and Matthew Roughan},
+	title = {Network Design Sensitivity Analysis},
+	booktitle = {ACM SIGMETRICS 2014},
+	location = {Austin, TX, USA},
+	month = JUN,
+	year = {2014},
+	pages = {449--461}
+}
+
+@inproceedings{Tune14MaxEnt,
+	author = {Paul Tune and Matthew Roughan},
+	title = {Maximum Entropy Traffic Matrix Synthesis},
+	booktitle = {ACM MAMA 2014},
+	month = JUN,
+	year = {2014},
+	note = {\url{http://tinyurl.com/kk7757k}}
+}
+
+%%%%%%%%%%%%%%%  Misc Tech Reports	 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@techreport{Tune14SpatialMaxEnt,
+	author = {Withheld},
+	title = {Controlled Random-Matrix Synthesis from First Principles},
+	note = {Available upon request},
+	year = {2014}
+}
+
+@techreport{Tune15Spatiotemp,
+	author = {Withheld},
+	title = {Spatiotemporal Traffic Matrix Synthesis: Technical Report},
+	note = {\url{http://tinyurl.com/osv4p5h}},
+	year = {2015}
+}
+
+@techreport{modelselection14tech,
+	author = {Withheld},
+	title = {Information Theoretic Traffic Model Selection},
+	year = {2015},
+	note = {\url{http://tinyurl.com/kcghcst}}
+}

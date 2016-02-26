@@ -1,0 +1,238 @@
+\section{Convex Ordering and Supermodularity}
+\label{sec:supermodular}
+
+We begin with the definition of (increasing) convex ordering:
+\begin{defn}
+Let $X$ and $Y$ be
+random variables with finite means. Then $X$ is
+less than $Y$ in (increasing) convex order, written $X \le_{cx} Y$
+($X \le_{icx} Y$), if $\E[f(X)] \le \E[f(Y)]$ holds for all real
+(increasing) convex functions $f$ such that the expectations
+exist.
+\label{def:convex_order}
+\end{defn}
+
+We can see how this ordering is useful: the moment generating function of any
+random variable is an increasing convex function, provided that it exists. Then,
+an ordering $X \le_{icx} Y$ implies that the moments of $X$ can be bounded by the
+moments of $Y$, which would be useful when using Chernoff-type inequalities (tail
+bounds).
+
+We will also later on require the \textit{usual stochastic ordering}.
+\begin{defn}
+A random variable (or random vector) $X$ is stochastically less than or equal to a random 
+variable (or random vector) $Y$, denoted as $X \le_{st} Y$, if and only if $\E[\phi(X)]
+\le \E[\phi(Y)]$ for all increasing functions $\phi$ such that the expectations exist.
+\label{defn:st_order}
+\end{defn}
+
+Supermodular functions (also know as $L$-superadditive functions \cite{Block89Ladditive}) are defined as follows:
+\begin{defn}
+A function $f: \Real^n \to \Real$ is called \textit{supermodular} if 
+\ben
+f(\bx \join \by) + f(\bx \meet \by) \ge f(\bx) + f(\by)
+\een
+where
+\begin{align*}
+\bx \join \by &:= \lbrack \max(x_1,y_1), \max(x_1,y_1), \cdots, \max(x_n,y_n)\rbrack,\\
+\bx \meet \by &:= \lbrack \min(x_1,y_1), \min(x_1,y_1), \cdots, \min(x_n,y_n)\rbrack.
+\end{align*}
+A function $f$ is \textit{submodular} if and only if $-f$ is supermodular.
+\end{defn}
+
+Supermodular functions are often defined on lattices. Naturally, a partial order can be
+defined on supermodular functions:
+\begin{defn}
+A random vector $\tbX = (X_1,X_2,\cdots,X_n)$ is said to be smaller than a random vector
+$\tbY = (Y_1,Y_2,\cdots,Y_n)$ in the supermodular order, denoted by $\tbX \lsm \tbY$ if
+$\E f(\tbX) \le \E f(\tbY)$ for all supermodular functions $f$ for which expectations exist. 
+\end{defn}
+
+A general result, by Christofides and Vaggelatou \cite[Theorem 1(b)]{Christofides04Supermod}, 
+proved an ordering for all supermodular functions with negatively associated random variables. 
+Supermodular ordering first appeared in \cite{Szekli94Queue}.
+%Note that throughout the section, we assume expectations of the random variables exist.
+
+\begin{thm}[Supermodular ordering and negative association]
+Let $X_1,X_2,\cdots,X_n$ be a collection of negatively associated random variables and 
+$Y_1,Y_2,\cdots,Y_n$ be independent random variables 
+where each $Y_i$ possesses the same marginal distribution as $X_i$, $\forall i$. Then,
+\ben
+(X_1,X_2,\cdots,X_n) \lsm (Y_1,Y_2,\cdots,Y_n).
+\een
+\label{thm:na_sm}
+\end{thm}
+
+The fact that a composition between an increasing and convex function $f : \Real^n \to \Real$
+and monotone and supermodular function $\phi: \Real^n \to \Real$ results in 
+$f \circ \phi$ being supermodular results in the following corollary 
+\cite[Corollary 1(b)]{Christofides04Supermod}:
+
+\begin{cor}
+Let $X_1,X_2,\cdots,X_n$ be a collection of negatively associated random variables and 
+$Y_1,Y_2,\cdots,Y_n$ be independent random variables 
+where each $Y_i$ possesses the same marginal distribution as $X_i$, $\forall i$. Then,
+\ben
+\phi(X_1,X_2,\cdots,X_n) \leicx \phi(Y_1,Y_2,\cdots,Y_n),
+\een
+for every $\phi$ monotone and supermodular.
+\label{cor:na_icx}
+\end{cor}
+
+
+
+Let us consider a simple example. The linear function
+\be
+f(x) = \sum_i a_i x_i,
+\label{eq:affine}
+\ee
+for all $a_i > 0$ is both increasing and supermodular (note that if there exists for
+some $i$, $a_i < 0$, then the function is no longer increasing and supermodular). 
+This function was encountered in the design of an SRAM-DRAM hybrid statistic counter
+architecture for counting traffic flow sizes \cite{Zhao09DRAM}. 
+We thus have a simpler alternative proof of \cite[Theorem 3]{Zhao09DRAM}:
+
+\begin{thm}
+Let $a_1,a_2,\cdots,a_n$ be constants, with $a_i > 0$, $\forall i$. Let $X_1,X_2,\cdots,X_n$ be real-valued
+negatively associated random variables. Let $Y_1,Y_2,\cdots,Y_n$ be independent random variables 
+where each $Y_i$ possesses the same marginal distribution as $X_i$, $\forall i$. Then,
+\ben
+\sum_{i=1}^n a_i X_i \lecx \sum_{i=1}^n a_i Y_i.
+\een
+\label{thm:na_convex}
+\end{thm}
+\begin{proof}
+Note that $\E\lbrack \sum_{i} a_i X_i \rbrack = \E\lbrack \sum_{i} a_i Y_i \rbrack$. Then, convex
+ordering is obtained instead of an increasing convex ordering. The result is just a consequence of
+the monotone increasing nature and supermodularity of the function \autoref{eq:affine}.
+\end{proof}
+
+\begin{rem}
+Note that it is not enough for $X_i$s to be negatively correlated. Theorem \autoref{thm:na_convex} asserts that
+$X_i$s are negatively correlated for all convex functions $f$. This can be seen in the proof of \cite[Theorem 1(b)]{Christofides04Supermod},
+where we need $\Cov(f'_+(X_1 + t), \mathbb{I}\{X_2 > t\}) \le 0$ to hold for all $t$.
+\end{rem}
+
+From this result, we immediately get the following as a corollary:
+\begin{cor}
+Assume the same notation as above. Let $X_1,X_2,\cdots,X_n$ be
+a sample without replacement and $Y_1,Y_2,\cdots,Y_n$ be a sample with replacement from
+a population $S = \{c_1,c_2,\cdots,c_N\}$, where $N > n$. Then,
+\ben
+\sum_{i=1}^n a_i X_i \lecx \sum_{i=1}^n a_i Y_i.
+\een
+\label{cor:sampling_wor_wr}
+\end{cor}
+\begin{proof}
+It is well-known that since $X_1,X_2,\cdots,X_n$ are a set of samples without replacement, they 
+are negatively associated \cite{JoagDev83NA}. 
+The result follows from a direct application of Theorem \autoref{thm:na_convex}.
+\end{proof}
+
+Moreover,
+Theorem \autoref{thm:na_convex} can be extended to show
+\ben
+\max_{1\le k \le n}\sum_{i=1}^k a_i X_i \leicx \max_{1\le k \le n} \sum_{i=1}^k a_i Y_i.
+\een
+Such a result can be used for the worse case tail analysis.
+Note that the ordering becomes a convex ordering \ie
+\ben
+\max_{1\le k \le n}\sum_{i=1}^k a_i X_i \lecx \max_{1\le k \le n} \sum_{i=1}^k a_i Y_i,
+\een
+if $\E[X_i] = \E[Y_i]$ for all $i$.
+Other examples of useful functions are the order statistic functions, for instance, the first and last
+order statistics, which are supermodular and submodular respectively. 
+
+Now, a set of random variables $X_1,X_2,\cdots, X_n$ are \textit{exchangeable} if their joint distribution
+is invariant under permutation. Suppose $X_i$ and $Y_i$ are exchangeable for $i=1,2,\cdots,n$. 
+Then the following holds
+
+\begin{thm}
+Let $a_1,a_2,\cdots,a_n$ be constants, with $a_i > 0$, $\forall i$. Let $X_1,X_2,\cdots,X_n$ be real-valued
+exchangeable and negatively associated random variables. Let $Y_1,Y_2,\cdots,Y_n$ be 
+real-valued exchangeable independent random variables where each $Y_i$ possesses the same marginal 
+distribution as $X_i$, $\forall i$. Then, for every $\cS \subseteq \{1,2,\cdots,n\}$,
+\ben
+\sum_{i \in \cS} a_i X_i \leicx \sum_{i \in \cS} a_i Y_i
+\een
+and
+\ben
+\max_{1 \le |\cS| \le n}\sum_{i \in \cS} a_i X_i \leicx \max_{1 \le |\cS| \le n} \sum_{i \in \cS} a_i Y_i .
+\een
+\label{thm:na_exchangeable}
+\end{thm}
+\begin{proof}
+We can construct any subset $\cS$ as follows. Suppose
+$|\cS| = k$. Consider a permutation of $X_i$ and $Y_i$, $X_{\sigma(i)}$ and $Y_\sigma(i)$ respectively for 
+$i=1,2,\cdots,n$. Then, indices belonging to $\cS$ can be chosen simply by choosing the appropriate
+permutation map $\sigma$ and then sampling the first $k$ indices. 
+Since the random variables are exchangeable, the joint distribution of these random variables remain
+unchanged, so they remain negatively associated. The theorem then follows by applying 
+Theorem \autoref{thm:na_convex}.
+\end{proof}
+
+Ideas from majorization can then be combined with supermodularity as well. Here, we present a 
+result found in \cite{Zhao10GlobalIceberg} on the design of a distributed algorithm for detecting
+global icebergs in networks.
+\begin{thm}[\cite{Zhao10GlobalIceberg}]
+Let $f$ be a convex function and $X_1,X_2,\cdots,X_n$ be non-negative valued 
+exchangeable random variables. Then, for two real vectors $\ba$ and $\bb$ with the
+relation $\ba \le_M \bb$ implies 
+\ben
+\sum_{i=1}^n f(a_i) X_i \le_{icx} \sum_{i=1}^n f(b_i) X_i.
+\een
+\label{thm:majorization_exchageable}
+\end{thm}
+
+\subsection{Proof recipe}
+
+Suppose we know that a set of random variables $X_1,X_2,\cdots,X_n$ are negatively associated.
+The general result of Christofides and Vaggelatou suggests a recipe on proving tail bounds on a
+function of disjoint subsets of $X_i$s: simply focus on proving the 
+supermodularity (submodularity) of the function $f$. 
+
+To do so, we require a closely related concept called \textit{(strictly) increasing differences}. For any
+function $f : \Real^n \to \Real$, let any pair of indices $i,j \in \{1,2,\cdots,n\}$, and any vector
+\ben
+\hat{x}_{i,j} = (x_1,\cdots,x_{i-1},x_{i+1},\cdots,x_{j-1},x_{j+1},\cdots,x_n) \in \Real^{n-2}
+\een
+that is an exclusion of entries $i,j$, and
+\ben
+f_{\hat{x}_{i,j}} (x'_i, x'_j) := f(x_1,\cdots,x_{i-1},x'_i,x_{i+1},\cdots,x_{j-1},x'_j,x_{j+1},\cdots,x_n).
+\een
+A function $f$ then has (strictly) increasing differences if for any pair of distinct indices $i,j$ and any
+vector $\hat{x}_{i,j}$, with $x_i \le x'_i (x_i < x'_i)$ and $x_j \le x'_j (x_j < x'_j)$,
+\ben
+f_{\hat{x}_{i,j}} (x_i, x_j) - f_{\hat{x}_{i,j}} (x_i, x'_j) (<)  \le f_{\hat{x}_{i,j}} (x'_i, x_j) - f_{\hat{x}_{i,j}} (x'_i, x'_j).
+\een
+The definition can be extended to the integer domain as well. For instance, we can see that the maximum bin load in
+the balls and bins model is an example of an increasing differences function.
+
+Then, following result would be useful in proving supermodularity of a function:
+\begin{thm}
+A function $f : \Real^n \to \Real$ is (strictly) supermodular if and only if $f$ has (strictly) increasing
+differences.
+\label{thm:increasing_diff}
+\end{thm}
+
+Moreover, if the 
+supermodular function is twice differentiable, then to prove supermodularity one needs to show
+\ben
+\frac{\partial^2 \phi(\bx)}{\partial x_i \partial x_j} \ge 0,
+\een
+for $\bx \in \Real^n$ and all $i \ne j$. 
+
+Example supermodular and increasing functions:
+\begin{itemize}
+\item $p$-norms: $\|\bx\|_p = \Big( \sum_{i} x_i^{p} \Big)^{1/p}$,
+\item first order statistic \cite{Block89Ladditive}: $f(\bx) = \max_{1\le i\le n} x_i$,
+\item product function over $\Real^n \times \Real^n$: $f(\bx,\by) = \sum_{i=1}^n x_i y_i$,
+\item Cobb Douglas function: $f(\bx) = \prod_{i=1}^n x_i^{\alpha_i}$ on the set
+$\{\bx\,|\,\bx \succeq 0\}$ ($\succeq$ denotes element-wise non-negativity), 
+for $\alpha_i \ge 0$,
+\item minimization: if $f_i(z)$ is increasing on $\Real$ for $i=1,2,\cdots,n$ then 
+\ben
+f(\bx) = \min_{i \in \{1,2,\cdots,n\}} f_i(x_i)
+\een 
+is supermodular on $\Real^n$.
+\end{itemize}

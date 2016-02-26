@@ -1,0 +1,28 @@
+\section{Background and Motivation}
+
+As mentioned in the introduction, the study of random processes are central in network algorithmics. 
+Common mathematical tools to bound the worst-case behavior includes the Markov's inequality,
+Chebyshev's inequality, the Chernoff bound and 
+Azuma-Hoeffding inequality \cite{Azuma67Martingale,Hoeffding63Bounded}. Overviews of these
+tools (and many others) can be found in \cite{Alon04ProbMethod,MitzenmacherProb05,Raghavan95RandAlgo}.
+
+Why do we care about finding strong, refined worst-case probability bounds? Or equivalently, can one just
+make do with coarse bound?
+
+The question can only be answered in context: if the problem can tolerate a wide margin of
+``bad'' events, then a refined worst-case probability bound is unnecessary. More often than not, however,
+due to the high-speed, large data volume environment, stronger bounds are a necessity.
+
+Consider the issue of packets arriving out-of-order after traversing a switch. TCP-based applications
+are sensitive to this packet reordering. A TCP-based application will drop the set of packets it has received thus far, and
+issue a retransmission to the sender, causing wastage of bandwidth. Suppose as a designer of a switch, at 
+worst, we know that packets will arrive out-of-order with probability $1/1000$. Then, roughly 1 out of a 
+1000 packets will be out-of-order. Suppose each packet is has size 100 bytes, then on a 100 Gbps link,
+it takes 8 ns to transmit a single packet. Then, we expect about 1 packet to be out-of-order every 8 
+$\mu$s. This may not be acceptable for some applications, so stronger bounds are required.
+
+The lesson here is that the volume of data processed by solutions from network algorithmics are massive,
+and certainly large enough for rare events to be seen in a given sample set. In the rest of the paper, we
+discuss some useful stochastic orderings and properties of random variables that help with the development
+of tighter worst-case bounds. 
+

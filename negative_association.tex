@@ -1,0 +1,182 @@
+\section{Negative Association}
+
+The concept of negatively associated random variables was first proposed by Joag-Dev \etal
+\cite{JoagDev83NA}, which is one specific definition of negative dependence between 
+random variables. The definition is as follows \cite[Definition 2.1]{JoagDev83NA}:
+\begin{defn}
+Random variables $X_1,X_2,\cdots, X_n$ are said to be {\em negatively associated} if for every pair of
+disjoint subsets $\cA_1, \cA_2$ of $\{1,2,\cdots,n\}$,
+\be
+\Cov\Big( f(X_i, i \in \cA_1), g(X_j, j \in \cA_2) \Big) \le 0
+\ee
+whenever $f$ and $g$ are increasing.
+\label{def:na}
+\end{defn}
+
+A major advantage of negative association over other definitions of negative dependence of random
+variables is that increasing functions of disjoint sets of negatively associated random variables
+are also negatively associated, \ie a closure property is satisfied.
+
+Now, how do negatively associated random variables fit into designing randomized algorithms? 
+The Chernoff bound \cite{MitzenmacherProb05} is a probability bound typically used to bound the error function of a
+randomized algorithm. However, the chief assumption is that the collection of random variables
+$X_1,X_2,\cdots,X_n$ must be independently distributed. This is generally not the case
+in network algorithmics. 
+
+Fortunately, the functions of interest on $X_1,X_2,\cdots,X_n$ are often
+non-decreasing, so the Chernoff bound can be used as an upper bound on function of these
+random variables, even though $X_1,X_2,\cdots,X_n$ are dependent. One such example is the sum
+of the random variables, \ie
+\ben
+f(X_1,X_2,\cdots,X_n) = \sum_{i=1}^n X_i.
+\een
+Intuition-wise, it's because 
+negative association ensures that the covariance between non-decreasing functions on subsets of
+the random variables are non-positive. Compare this with independent random variables, where the
+covariance would be exactly zero. Since the Chernoff bound is a moment bound, we know that 
+non-positive covariance can only decrease variance, so the upper bound must be that of 
+independent random variables. The discussion in the next section and Theorem \autoref{thm:na_sm}
+will make this clearer.
+
+At present, there is no well-developed framework, so proving that a set of random variables are
+negatively associated is, aside from some special cases, a difficult task. 
+
+One useful tool is the Fortuin-Kasteleyn-Ginibre (FKG) inequality \cite{Fortuin71FKG}. In
+\cite{Dubhashi96FKGNA}, Dubhashi \etal showed how the FKG inequality can be used to prove
+the negative associativity of some well-known distributions, such as negatively correlated
+(binary) coins and the permutation distribution. The proofs, however, exploited clever 
+arrangements of the events of a random variable on lattices \cite{Dubhashi96FKGNA}.
+It must also be mentioned that this proof technique requires that the set of random variables
+be discrete random variables.
+
+Unfortunately, at present, it is often difficult to prove negative association despite its wide
+implications. Though negative association is a very useful property to have, but because
+proving this property is difficult, one way is to just show a weaker negative dependence,
+such as, for a particular function $f$,
+\ben
+\E\left\lbrack \prod_{i=1}^m f(X_i) \right\rbrack 
+\le  \prod_{i=1}^m \E\left\lbrack f(X_i) \right\rbrack .
+\een
+However, when negative association applies, we can elegantly sidestep more complicated
+arguments based on martingales and the Azuma-Hoeffding inequality 
+\cite{Azuma67Martingale,Hoeffding63Bounded}.
+
+There has been results proving the negative association of random variables from 
+well-known distributions.
+Joag-Dev \etal \cite{JoagDev83NA} list some examples of negatively associated random variables:
+\begin{enumerate}
+\item \textit{Permutation distribution}: the joint distribution of a random vector $(X_1,X_2,\cdots,X_n)$,
+$n > 1$, which takes as values all $n!$ permutations of $(x_1,x_2,\cdots, x_n)$, which is a set of 
+$n$ real numbers, with equal probabilities, \ie $1/n!$. This covers two important cases:
+\begin{itemize}
+\item samples obtained from a finite population via random sampling without replacement, and
+\item the joint distribution of ranks of a finite random sample from a population.
+\end{itemize}
+\item \textit{Several canonical multivariate distributions}: examples include the
+\begin{itemize}
+\item multinomial distribution,
+\item multivariate hypergeometric distribution,
+\item Dirichlet distribution,
+\item Dirichlet compound multinomial distribution,
+\item multinormal distributions having certain covariance matrices, and
+\item negatively correlated normal random variables.
+\end{itemize}
+\item \textit{Marginal distributions of the row (column) vectors of a contingency table}: 
+each cell count is an independent random sample taken from subpopulations that were
+formed by partitioning the population according to the categories of the table.
+\end{enumerate}
+
+Aside from these examples, another is the famous \textit{balls-and-bins} model, where $n$ balls
+are thrown uniformly at random into $m$ bins. If the balls are identical, then the joint distribution of
+the number of balls in each bin $B_i$, $i=1,2\cdots,m$, once all the balls were thrown is then 
+equal to the multinomial distribution. Thus, the balls-and-bins model is a generalization 
+of the multinomial distribution, where one can have a probability $p_{i,k}$ to denote the
+probability ball $k$ lands in bin $i$. The balls-and-bins model was indirectly listed in 
+Joag-Dev \etal \cite{JoagDev83NA} as the ``convolution of unlike multinomial distributions'', but
+no prove was given.
+
+Dubhashi and Ranjan \cite{Dubhashi96BallsBins} showed that the random variables 
+$B_i$, $i=1,2\cdots,m$, are in fact negatively associated. The intuition is clear, though the proof is
+a little more complicated: since the number of balls $n$ is fixed, if a ball lands in bin $i$, then
+there is one less ball that could possibly land in bin $j$. 
+
+The balls-and-bins model arises in various problems in network algorithmics. For instance,
+the power-of-two-choices heuristic used in load balancing and improving performance of
+hash tables and Bloom filters is cast as a problem in distributing balls over bins. 
+
+
+
+
+\subsection{Useful properties}
+
+From the above, proving negative association can be challenging. 
+In this section, we list some useful properties of negatively associated random variables.
+These can be used to simplify proofs of the negative association of a set of random variables.
+
+The following result was presented in \cite{JoagDev83NA} without proof. A proof is given here for
+reference.
+\begin{thm}
+A pair of continuous random variables $X,Y$ are negatively associated if and only if 
+\be
+\Pr(X \le x, Y \le y) \le \Pr(X \le x) \Pr(Y\le y).
+\label{eq:nqd}
+\ee
+\end{thm}
+\begin{proof}
+If $X,Y$ are negatively associated, then by choosing the indicator functions
+$\mathbb{I} \{X \le x\}$ and $\mathbb{I}\{Y \le y\}$, we have
+\begin{align*}
+\Cov(\mathbb{I}\{X \le x\}, \mathbb{I}\{Y \le y\}) &\le 0\\
+\E[\mathbb{I}\{X \le x\}\mathbb{I}\{Y \le y\}] - \E[\mathbb{I}\{X \le x\}] \E[\mathbb{I}\{Y \le y\}] &\le 0\\
+\Pr(X \le x, Y \le y) - \Pr(X \le x) \Pr(Y\le y) &\le 0,
+\end{align*}
+and the result follows.
+
+In the other direction, Hoeffding's identity \cite{Hoeffding63Bounded} implies
+\ben
+\Cov(f(X),g(Y)) = 2\int_{\Real} \int_{\Real} \Pr(f(X) \le u, g(Y) \le v) - \Pr(f(X) \le u)\Pr(g(Y) \le v) \,dx\,dy .
+\een
+However, applying the functions $f,g$ on \autoref{eq:nqd}, we get the inequality
+\ben
+\Pr(f(X) \le u, g(Y) \le v) - \Pr(f(X) \le u)\Pr(g(Y) \le v) \le 0.
+\een
+The result then follows.
+\end{proof}
+
+The result is also equivalent to the following: the pair $X,Y$ is negatively associated if and only if
+\ben
+\Pr(Y \le y\,|\,X\le x) \le \Pr(Y \le y) \text{ or } \Pr(X \le x\,|\,Y\le y) \le \Pr(X \le x).
+\een
+This equivalence provides much better intuition about negatively associated random variables. Additionally,
+if the random variables satisfy \autoref{eq:nqd} then they are \textit{negative quadrature dependent}
+\cite{Lehmann66NQD}.
+
+Note that the theorem does not apply to discrete random variables \ie . However, in the case of
+binary random variables, the variables are negatively associated if and only if 
+they are negatively correlated \cite{Dubhashi96BallsNA}.
+
+An important property for use together with Chernoff-type inequalities is the following: let 
+$\cA_1,\cA_2, \cdots, \cA_m$ be disjoint subsets of the index set $\{1,2,\cdots,n\}$ and
+$f_1,f_2,\cdots,f_m$ be increasing positive functions. Then if the set of random variables
+$X_1,X_2,\cdots,X_n$ are negatively associated, it implies that
+\ben
+\E\left\lbrack \prod_{i=1}^m f_i(X_j, j\in \cA_i) \right\rbrack 
+\le  \prod_{i=1}^m \E\left\lbrack f_i(X_j, j\in \cA_i) \right\rbrack .
+\een
+This means that the function $\prod_{i=1}^m f_i(X_j, j\in \cA_i)$ is log-concave. Moreover,
+the it also follows that for $x_i \in \Real$, $i = 1,2,\cdots,n$, and $\cA_1, \cA_2$ are
+disjoint subsets of $\{1,2,\cdots,n\}$, 
+\begin{align}
+\Pr(X_i \le x_i, i=1,2,\cdots,n) &\le \Pr(X_i \le x_i, i\in \cA_1) \Pr(X_j \le x_j, j\in \cA_2),\\
+\Pr(X_i > x_i, i=1,2,\cdots,n) &\le \Pr(X_i > x_i, i\in \cA_1) \Pr(X_j > x_j, j\in \cA_2).
+\end{align}
+
+Several other properties listed in \cite{JoagDev83NA} are:
+\begin{enumerate}
+\item a subset of two or more negatively associated random variables are negatively associated,
+\item a set of independent random variables are negatively associated,
+\item increasing functions defined on disjoint subsets of a set of negatively associated random variables are
+negatively associated,
+\item the union of independent sets of negatively associated random variables are negatively associated.
+\end{enumerate}
+
