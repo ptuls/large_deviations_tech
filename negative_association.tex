@@ -89,11 +89,11 @@ formed by partitioning the population according to the categories of the table.
 Aside from these examples, another is the famous \textit{balls-and-bins} model, where $n$ balls
 are thrown uniformly at random into $m$ bins. If the balls are identical, then the joint distribution of
 the number of balls in each bin $B_i$, $i=1,2\cdots,m$, once all the balls were thrown is then 
-equal to the multinomial distribution. Thus, the balls-and-bins model is a generalization 
+equal to the multinomial distribution. If the balls are not identical then the balls-and-bins model is a generalization 
 of the multinomial distribution, where one can have a probability $p_{i,k}$ to denote the
 probability ball $k$ lands in bin $i$. The balls-and-bins model was indirectly listed in 
 Joag-Dev \etal \cite{JoagDev83NA} as the ``convolution of unlike multinomial distributions'', but
-no prove was given.
+no proof was given.
 
 Dubhashi and Ranjan \cite{Dubhashi96BallsBins} showed that the random variables 
 $B_i$, $i=1,2\cdots,m$, are in fact negatively associated. The intuition is clear, though the proof is
@@ -101,8 +101,9 @@ a little more complicated: since the number of balls $n$ is fixed, if a ball lan
 there is one less ball that could possibly land in bin $j$. 
 
 The balls-and-bins model arises in various problems in network algorithmics. For instance,
-the power-of-two-choices heuristic used in load balancing and improving performance of
-hash tables and Bloom filters is cast as a problem in distributing balls over bins. 
+the power-of-two-choices heuristic, used in load balancing \cite{Mitzenmacher01PowerTwo} 
+and improving performance of hash tables and Bloom filters, is cast as a problem in 
+distributing balls over bins. 
 
 
 

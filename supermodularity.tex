@@ -1,6 +1,10 @@
 \section{Convex Ordering and Supermodularity}
 \label{sec:supermodular}
 
+As we have seen from the discussions thus far, a recurring theme in network algorithmics is to bound 
+the large deviation probability of some function of interest $f$, and $f$ depends on a set of random
+variables. In this section, we consider the important class of \textit{supermodular functions}.
+
 We begin with the definition of (increasing) convex ordering:
 \begin{defn}
 Let $X$ and $Y$ be
@@ -81,15 +85,24 @@ for every $\phi$ monotone and supermodular.
 
 
 
-Let us consider a simple example. The linear function
+In terms of applications, supermodularity is very useful for large per-flow data structure problems.
+During a measurement period, tens of millions of application flows may pass through an Internet gateway. Many network algorithmics methods 
+have been developed that make use of per-flow state information, \eg per-flow scheduling, stateful firewalls, and multi-packet deep packet 
+inspection for intrusion and virus detection. However, it is very challenging to design massive flow-level data structures that are capable of 
+providing extremely high throughput and low bounded access delay under arbitrary workloads, yet have relatively low costs. 
+
+Let us look at a specific example:
+\begin{exm}
+To alleviate counter costs due to expensive memory usage, Zhao \etal \cite{Zhao09DRAM} proposes an SRAM-DRAM 
+hybrid statistic counter counting traffic flow sizes that provides
+strong worst-case stochastic performance guarantees using commodity memories.
+The function they considered can be used as our simple example. The linear function
 \be
 f(x) = \sum_i a_i x_i,
 \label{eq:affine}
 \ee
 for all $a_i > 0$ is both increasing and supermodular (note that if there exists for
 some $i$, $a_i < 0$, then the function is no longer increasing and supermodular). 
-This function was encountered in the design of an SRAM-DRAM hybrid statistic counter
-architecture for counting traffic flow sizes \cite{Zhao09DRAM}. 
 We thus have a simpler alternative proof of \cite[Theorem 3]{Zhao09DRAM}:
 
 \begin{thm}
@@ -106,11 +119,13 @@ Note that $\E\lbrack \sum_{i} a_i X_i \rbrack = \E\lbrack \sum_{i} a_i Y_i \rbra
 ordering is obtained instead of an increasing convex ordering. The result is just a consequence of
 the monotone increasing nature and supermodularity of the function \autoref{eq:affine}.
 \end{proof}
+\end{exm}
 
 \begin{rem}
 Note that it is not enough for $X_i$s to be negatively correlated. Theorem \autoref{thm:na_convex} asserts that
 $X_i$s are negatively correlated for all convex functions $f$. This can be seen in the proof of \cite[Theorem 1(b)]{Christofides04Supermod},
-where we need $\Cov(f'_+(X_1 + t), \mathbb{I}\{X_2 > t\}) \le 0$ to hold for all $t$.
+where we need $\Cov(f'(X_1 + t), \mathbb{I}\{X_2 > t\}) \le 0$ to hold for all $t$, where $f'$ is the partial derivative of $f$ with 
+respect to $x_1$.
 \end{rem}
 
 From this result, we immediately get the following as a corollary:
@@ -227,7 +242,7 @@ Example supermodular and increasing functions:
 \item $p$-norms: $\|\bx\|_p = \Big( \sum_{i} x_i^{p} \Big)^{1/p}$,
 \item first order statistic \cite{Block89Ladditive}: $f(\bx) = \max_{1\le i\le n} x_i$,
 \item product function over $\Real^n \times \Real^n$: $f(\bx,\by) = \sum_{i=1}^n x_i y_i$,
-\item Cobb Douglas function: $f(\bx) = \prod_{i=1}^n x_i^{\alpha_i}$ on the set
+\item Cobb-Douglas function: $f(\bx) = \prod_{i=1}^n x_i^{\alpha_i}$ on the set
 $\{\bx\,|\,\bx \succeq 0\}$ ($\succeq$ denotes element-wise non-negativity), 
 for $\alpha_i \ge 0$,
 \item minimization: if $f_i(z)$ is increasing on $\Real$ for $i=1,2,\cdots,n$ then 
