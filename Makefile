@@ -32,8 +32,8 @@ PS2PDF = ps2pdf -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress
 DVIPS = dvips -Ppdf -G0 -tletter
 MKINDEX = makeindex 
 
-SRCFILES := $(shell ls *.tex)
-SRC = large_deviation_summary.tex
+SRCFILES := $(shell ls src/*.tex)
+SRC = src/large_deviation_summary.tex
 ROOT = $(SRC:.tex=)
 PS  = $(SRC:.tex=.ps)
 PDF = $(SRC:.tex=.pdf)
