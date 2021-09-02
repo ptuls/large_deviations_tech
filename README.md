@@ -10,4 +10,4 @@ As of the present, unpublished manuscript on the application of stochastic order
 
 ## Sidenote
 
-This is supposed to be a sort of survey paper, but I can't help myself from coming up with new results. See, in particular, Theorem 21 for log-concave distributions and a nice connection with the [balls into bins](https://en.wikipedia.org/wiki/Balls_into_bins) model.
+Theorem 21 has a nice connection between log-concave distributions and the [balls into bins](https://en.wikipedia.org/wiki/Balls_into_bins) model.
